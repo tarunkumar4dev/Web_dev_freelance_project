@@ -18,45 +18,44 @@ export function ProductCard({ p, index = 0 }: { p: Product; index?: number }) {
   const num = String(index + 1).padStart(2, "0");
 
   return (
-    <Link
-      to="/product/$slug"
-      params={{ slug: p.slug }}
-      className="group block"
-    >
-      <div className="relative aspect-[3/4] overflow-hidden bg-surface">
+    <Link to="/product/$slug" params={{ slug: p.slug }} className="group block">
+      <div className="relative aspect-[4/5] overflow-hidden bg-surface">
         <img
           src={p.images[0]}
           alt={p.name}
-          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 brightness-90"
         />
         
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 card-overlay" />
         
-        {/* Number */}
-        <span className="absolute bottom-4 left-4 font-serif text-[80px] leading-none text-gold/20 select-none">
+        {/* Editorial Number */}
+        <span className="editorial-number absolute top-4 right-4">
           /{num}
         </span>
         
         {p.is_limited_edition && !soldOut && (
-          <span className="absolute top-4 left-4 bg-gold text-background text-[9px] tracking-[0.2em] uppercase px-3 py-1">
+          <span className="absolute top-4 left-4 bg-mauve/20 text-mauve text-[9px] tracking-[0.2em] uppercase px-3 py-1">
             Limited
           </span>
         )}
         
         {soldOut && (
-          <div className="absolute inset-0 bg-background/80 flex items-center justify-center backdrop-blur-sm">
-            <span className="border border-gold text-gold px-6 py-2 text-xs tracking-[0.3em] uppercase">
+          <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+            <span className="text-xs tracking-[0.3em] uppercase text-muted">
               Sold Out
             </span>
           </div>
         )}
-      </div>
-      
-      <div className="mt-4 text-center">
-        <h3 className="font-serif text-lg text-foreground group-hover:text-gold transition-colors duration-300">
-          {p.name}
-        </h3>
-        <p className="text-sm text-muted mt-1">{formatINR(p.price)}</p>
+        
+        {/* Text at bottom */}
+        <div className="absolute bottom-5 left-5 right-5">
+          <h3 className="font-serif text-xl text-cream group-hover:text-mauve transition-colors">
+            {p.name}
+          </h3>
+          <p className="text-xs tracking-[0.2em] uppercase text-gold mt-1">
+            {formatINR(p.price)}
+          </p>
+        </div>
       </div>
     </Link>
   );
